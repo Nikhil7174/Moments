@@ -1,14 +1,43 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import moments from "./images/moments.png";
 import "./App.css";
-
+import Posts from "./components/Posts/Posts";
+import Form from "./components/Form/Form";
+import useStyles from "./styles";
 function App() {
-  const [count, setCount] = useState(0);
-
+  const classes = useStyles();
   return (
     <>
-      <h1>App</h1>
+      <Container maxWidth="lg">
+        <AppBar className={classes.appBar} position="static" color="inherit">
+          <Typography className={classes.heading} variant="h2" align="center">
+            Moments
+          </Typography>
+          <img
+            className={classes.image}
+            src={moments}
+            alt="moments"
+            height="60"
+          />
+        </AppBar>
+        <Grow in>
+          <Container>
+            <Grid
+              container
+              justifyContent="space-between"
+              alignItems="stretch"
+              spacing={3}
+            >
+              <Grid item xs={12} sm={7}>
+                <Posts />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Form />
+              </Grid>
+            </Grid>
+          </Container>
+        </Grow>
+      </Container>
     </>
   );
 }
