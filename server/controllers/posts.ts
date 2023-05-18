@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import PostMessage from '../models/postMessage';
+import mongoose from 'mongoose';
 
 //https://www.restapitutorial.com/httpstatuscodes.html
 export const getPosts = async (req: Request, res: Response): Promise<void> => {
@@ -21,3 +22,14 @@ export const createPosts = async (req: Request, res: Response): Promise<void> =>
         res.status(409).json({ message: error.message })
     }
 };
+
+// /post/id
+export const updatePost = async (req: Request, res: Response): Promise<any> => {
+    const { id: _id } = req.params
+    const post = req.body
+    if (!mongoose.Types.ObjectId.isValid(_id)) { return res.status(404).send('no post with that id') }
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(_id, { ...post, _id }, { new: true })
+
+    res.json(updatedPost)
+}
