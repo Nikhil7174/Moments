@@ -12,9 +12,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import useStyles from "./styles";
 import moment from "moment";
+import { deletePost } from "../../../actions/posts";
+import { useDispatch } from "react-redux";
 
 function Post({ post, setCurrentId }): JSX.Element {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <>
       <Card>
@@ -47,11 +50,11 @@ function Post({ post, setCurrentId }): JSX.Element {
             {post.tags.map((tag: string) => `#${tag} `)}
           </Typography>
         </div>
-        <Typography className={classes.title} variant="h5" gutterBottom>
+        <Typography className={classes.title} gutterBottom>
           {post.title}
         </Typography>
         <CardContent>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             {post.message}
           </Typography>
         </CardContent>
@@ -60,7 +63,13 @@ function Post({ post, setCurrentId }): JSX.Element {
             <ThumbUpAltIcon fontSize="small" />
             Like {post.likeCount}
           </Button>
-          <Button size="small" color="primary" onClick={() => {}}>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => {
+              dispatch(deletePost(post._id));
+            }}
+          >
             <ThumbUpAltIcon fontSize="small" />
             Delete
           </Button>

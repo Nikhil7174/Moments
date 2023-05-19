@@ -22,11 +22,12 @@ export default makeStyles({
     position: "relative",
   },
   overlay: {
-    // position: "absolute",
+    marginTop: "-182px",
+    position: "absolute",
     // top: "20px",
     // left: "20px",
     padding: "0.5rem",
-    color: "black",
+    color: "white",
   },
   overlay2: {
     position: "absolute",
@@ -45,6 +46,7 @@ export default makeStyles({
   },
   title: {
     padding: "0 16px",
+    fontSize: "24px",
   },
   cardActions: {
     padding: "0 16px 8px 16px",
