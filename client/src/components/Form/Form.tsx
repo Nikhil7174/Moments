@@ -9,11 +9,19 @@ import { createPost, updatePost } from "../../actions/posts";
 //get the current id of the post
 
 function Form({ currentId, setCurrentId }): JSX.Element {
-  const [postData, setPostData] = useState({
+  interface PostDataType {
+    creator: string;
+    title: string;
+    message: string;
+    tags: String[];
+    selectedFile: string;
+  }
+
+  const [postData, setPostData] = useState<PostDataType>({
     creator: "",
     title: "",
     message: "",
-    tags: "",
+    tags: [],
     selectedFile: "",
   });
   const post = useSelector((state: any) =>
@@ -89,7 +97,9 @@ function Form({ currentId, setCurrentId }): JSX.Element {
             label="Tags"
             fullWidth
             value={postData.tags}
-            onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+            onChange={(e) =>
+              setPostData({ ...postData, tags: e.target.value.split(",") })
+            }
           ></TextField>
           <div className={classes.fileInput}>
             <FileBase

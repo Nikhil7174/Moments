@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use('/posts', postRoutes)
 
-const CONNECTION_URL: string = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster01.drckdar.mongodb.net/?retryWrites=true&w=majority`
+const CONNECTION_URL: string = process.env.CONNECTION_URL
 
 const PORT: number | string = process.env.PORT || 5000
 
