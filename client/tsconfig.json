@@ -19,6 +19,13 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "filesGlob": [
+    "./src/**/*.ts",
+    "./test/**/*.ts",
+    "!./node_modules/**/*.ts",
+    "src/custom_typings.d.ts",
+    "typings/browser.d.ts"
+  ],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,10 +1,20 @@
-import React from "react";
+import React, { FC } from "react";
 import { TextField, Grid, InputAdornment, IconButton } from "@material-ui/core";
 
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-function Input({
+interface InputProps {
+  name: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+  half: boolean;
+  autoFocus: boolean;
+  type: string;
+  handleShowPassword: () => void;
+}
+
+const Input: FC<InputProps> = ({
   name,
   handleChange,
   label,
@@ -12,7 +22,7 @@ function Input({
   autoFocus,
   type,
   handleShowPassword,
-}) {
+}) => {
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
       <TextField
@@ -35,11 +45,11 @@ function Input({
                   </InputAdornment>
                 ),
               }
-            : null
+            : undefined
         }
       />
     </Grid>
   );
-}
+};
 
 export default Input;
