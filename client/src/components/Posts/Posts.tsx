@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchPosts } from "../../api";
 
 function Posts({ setCurrentId }): JSX.Element {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const posts = useSelector((state: any) => state.posts);
   const classes = useStyles();
   console.log(posts.length);

@@ -6,31 +6,87 @@ import {
   Grid,
   Typography,
   Container,
-  Icon,
 } from "@material-ui/core";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
-import { GoogleLogin } from "react-google-login";
 import useStyles from "./styles";
+import jwt_decode from "jwt-decode";
 import Input from "./Input";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signin, signup } from "../../actions/auth";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 function Auth() {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const classes = useStyles();
   const [isSignup, setIsSignup] = useState(false);
+  const [user, setUser] = useState({});
+  const [formData, setFormData] = useState(initialState);
 
+  // const handleSignOut = (event) => {
+  //   setUser({});
+  //   document.getElementById("signInDiv").hidden = false;
+  // };
+
+  useEffect(() => {
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "797847668640-m6hk2og01eor7qmr2iii2ml1sko9625q.apps.googleusercontent.com",
+      callback: googleSuccessResponse,
+      prompt_parent_id: "g_id_onload",
+    });
+
+    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
+      theme: "outline",
+      size: "large",
+    });
+    google.accounts.id.prompt();
+  }, []);
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-  const handleSubmit = () => {};
-  const handleChange = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      dispatch(signup(formData, navigate));
+    } else {
+      dispatch(signin(formData, navigate));
+    }
+  };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
     handleShowPassword();
   };
-  const googleSuccess = async (res: string) => {
-    console.log(res);
+  const googleSuccessResponse = async (res: any) => {
+    var token = res.credential;
+    var result = jwt_decode(res.credential);
+    console.log("token: ", token);
+    console.log("result: ", result);
+    document.getElementById("signInDiv").hidden = true;
+
+    try {
+      dispatch({ type: "Auth", data: { result, token } });
+      const action = { result, token };
+      localStorage.setItem("profile", JSON.stringify({ ...action }));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const googleFailure = (error: any) => {
+  const googleFailureResponse = (error: any) => {
     console.log(error);
     console.log("Google Sign was unsuccessful. try Again later");
   };
@@ -49,17 +105,17 @@ function Auth() {
               {isSignup && (
                 <>
                   <Input
-                    name="FirstName"
+                    name="firstName"
                     label="First Name"
-                    handleChange={handleSubmit}
+                    handleChange={handleChange}
                     autoFocus
                     half
                   />
 
                   <Input
-                    name="FirstName"
-                    label="First Name"
-                    handleChange={handleSubmit}
+                    name="lastName"
+                    label="Last Name"
+                    handleChange={handleChange}
                     half
                   ></Input>
                 </>
@@ -96,25 +152,10 @@ function Auth() {
             >
               {isSignup ? "Sign Up" : "Sign In"}
             </Button>
-            {/* <GoogleLogin
-              clientId="797847668640-m6hk2og01eor7qmr2iii2ml1sko9625q.apps.googleusercontent.com"
-              render={(renderProps) => (
-                <Button
-                  className={classes.googleButton}
-                  color="primary"
-                  fullWidth
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                  startIcon={<Icon />}
-                  variant="contained"
-                >
-                  Google Sign In
-                </Button>
-              )}
-              onSuccess={googleSuccess}
-              onFailure={googleFailure}
-              cookiePolicy="single_host_origin"
-            /> */}
+            <div id="signInDiv"></div>
+            {/* {Object.keys(user).length != 0 && (
+              <button onClick={(e) => handleSignOut(e)}></button>
+            )} */}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Button onClick={switchMode}>
