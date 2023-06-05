@@ -6,7 +6,7 @@ interface Post {
     creator: string;
     tags: string[];
     selectedFile: string;
-    likeCount?: number;
+    likes: string[];
     createdAt?: Date;
 }
 
@@ -16,9 +16,9 @@ const postSchema: Schema<Post> = new mongoose.Schema({
     creator: String,
     tags: [String],
     selectedFile: String,
-    likeCount: {
-        type: Number,
-        default: 0
+    likes: {
+        type: [String],
+        default: []
     },
     createdAt: {
         type: Date,

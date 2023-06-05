@@ -3,9 +3,10 @@ import { Dispatch } from "redux";
 import { AUTH } from "../constants/actionType";
 
 export const signin =
-  (formData: object, navigate: any) => async (dispatch: any) => {
+  (formData: object, navigate: any) => async (dispatch: Dispatch) => {
     try {
-      // log in the user
+      const { data } = await api.signIn(formData);
+      dispatch({ type: AUTH, data });
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -13,9 +14,10 @@ export const signin =
   };
 
 export const signup =
-  (formData: object, navigate: any) => async (dispatch: any) => {
+  (formData: object, navigate: any) => async (dispatch: Dispatch) => {
     try {
-      // sign up the user
+      const { data } = await api.signUp(formData);
+      dispatch({ type: AUTH, data });
       navigate("/");
     } catch (error) {
       console.log(error);
