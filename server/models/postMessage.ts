@@ -3,6 +3,7 @@ import mongoose, { Schema, Model } from 'mongoose'
 interface Post {
     title: string;
     message: string;
+    name: string;
     creator: string;
     tags: string[];
     selectedFile: string;
@@ -13,6 +14,7 @@ interface Post {
 const postSchema: Schema<Post> = new mongoose.Schema({
     title: String,
     message: String,
+    name: String,
     creator: String,
     tags: [String],
     selectedFile: String,

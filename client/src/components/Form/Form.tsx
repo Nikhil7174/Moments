@@ -5,12 +5,12 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import useStyles from "./styles";
 import { createPost, updatePost } from "../../actions/posts";
+// import { useNavigate } from "react-router-dom";
 
 //get the current id of the post
 
 function Form({ currentId, setCurrentId }): JSX.Element {
   interface PostDataType {
-    creator: string;
     title: string;
     message: string;
     tags: String[];
@@ -18,7 +18,6 @@ function Form({ currentId, setCurrentId }): JSX.Element {
   }
 
   const [postData, setPostData] = useState<PostDataType>({
-    creator: "",
     title: "",
     message: "",
     tags: [],
@@ -34,25 +33,41 @@ function Form({ currentId, setCurrentId }): JSX.Element {
 
   const dispatch = useDispatch();
   const classes = useStyles();
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
-    } else {
-      dispatch(createPost(postData));
-    }
-    clear();
-  };
+  const user = JSON.parse(localStorage.getItem("profile"));
+  // const navigate = useNavigate();
+
   const clear = () => {
     setCurrentId(null),
       setPostData({
-        creator: "",
         title: "",
         message: "",
-        tags: "",
+        tags: [],
         selectedFile: "",
       });
   };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (currentId) {
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
+      clear();
+    } else {
+      dispatch(createPost(postData));
+      clear();
+    }
+  };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In to capture your own moments and like other's
+        </Typography>
+      </Paper>
+    );
+  }
   return (
     <>
       <Paper className={classes.paper}>
@@ -65,15 +80,7 @@ function Form({ currentId, setCurrentId }): JSX.Element {
           <Typography variant="h6">
             {currentId ? "Edit" : "Capture"} Your Moment
           </Typography>
-          <TextField
-            name="creator"
-            label="Creator"
-            fullWidth
-            value={postData.creator}
-            onChange={(e) =>
-              setPostData({ ...postData, creator: e.target.value })
-            }
-          ></TextField>
+
           <TextField
             name="title"
             label="Title"
