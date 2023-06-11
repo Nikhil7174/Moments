@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import useStyles from "./styles";
@@ -18,6 +19,37 @@ import { useDispatch } from "react-redux";
 function Post({ post, setCurrentId }): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("profile"));
+
+  const Likes = () => {
+    if (post.likes.length > 0) {
+      return post.likes.find(
+        (like) => like === (user?.result?.googleId || user?.result?._id)
+      ) ? (
+        <>
+          <ThumbUpAltIcon fontSize="small" />
+          &nbsp;
+          {post.likes.length > 2
+            ? `You and ${post.likes.length - 1} others`
+            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+        </>
+      ) : (
+        <>
+          <ThumbUpAltOutlined fontSize="small" />
+          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ThumbUpAltOutlined fontSize="small" />
+        &nbsp;Like
+      </>
+    );
+  };
+
   return (
     <>
       <Card>
@@ -62,12 +94,12 @@ function Post({ post, setCurrentId }): JSX.Element {
           <Button
             size="small"
             color="primary"
+            disabled={!user?.result}
             onClick={() => {
               dispatch(likePost(post._id));
             }}
           >
-            <ThumbUpAltIcon fontSize="small" />
-            &nbsp; Like &nbsp; {post.likeCount}
+            <Likes />
           </Button>
           <Button
             size="small"

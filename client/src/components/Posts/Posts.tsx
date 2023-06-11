@@ -3,15 +3,15 @@ import { useSelector } from "react-redux";
 import Post from "./Post/Post";
 import useStyles from "./styles";
 import { Grid, CircularProgress } from "@material-ui/core";
-import { Id } from "@reduxjs/toolkit/dist/tsHelpers";
-import { useDispatch } from "react-redux";
-import { fetchPosts } from "../../api";
+// import { Id } from "@reduxjs/toolkit/dist/tsHelpers";
+// import { useDispatch } from "react-redux";
+// import { fetchPosts } from "../../api";
 
 function Posts({ setCurrentId }): JSX.Element {
   // const dispatch = useDispatch();
   const posts = useSelector((state: any) => state.posts);
   const classes = useStyles();
-  console.log(posts.length);
+  // console.log(posts.length);
   return !posts.length ? (
     <CircularProgress />
   ) : (

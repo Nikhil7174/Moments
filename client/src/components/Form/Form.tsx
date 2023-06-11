@@ -68,6 +68,7 @@ function Form({ currentId, setCurrentId }): JSX.Element {
       </Paper>
     );
   }
+
   return (
     <>
       <Paper className={classes.paper}>

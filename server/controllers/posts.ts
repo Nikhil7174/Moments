@@ -49,13 +49,32 @@ export const likePost = async (req: any, res: Response): Promise<any> => {
 
     const post: any = await PostMessage.findById(_id)
 
-    const index = post.likes.findIndex((id: string) => { id === String(req.userId) })
-
-    if (index === -1) {
-        post.likes.push(req.userId)
-    } else {
-        post.likes = post.likes.filter((id: string) => { id != String(req.userId) })
+    // console.log("like id: ", post.likes[index])
+    // console.log("user id: ", req.userId)
+    for (var i = 0; i < post.likes.length; i++) {
+        if (post.likes[i] === String(req.userId))
+            var index = i;
+        else
+            index = undefined;
     }
+    // const index = post.likes.findIndex((id: any) => { id === String(req.userId) })
+    // console.log("index: ", index);
+    if (index === undefined) {
+        post.likes.push(req.userId)
+
+    } else {
+        // post.likes = post.likes.filter((id: any) => { id != String(req.userId) })
+        const filteredLikes = [];
+        for (let i = 0; i < post.likes.length; i++) {
+            const id = post.likes[i];
+            if (id !== String(req.userId)) {
+                filteredLikes.push(id);
+            }
+        }
+        post.likes = filteredLikes;
+
+    }
+    // console.log("post like id: ", post.likes)
 
     const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, { new: true })
 

@@ -73,8 +73,8 @@ function Auth() {
   const googleSuccessResponse = async (res: any) => {
     var token = res.credential;
     var result = jwt_decode(res.credential);
-    console.log("token: ", token);
-    console.log("result: ", result);
+    // console.log("token: ", token);
+    // console.log("result: ", result);
     document.getElementById("signInDiv").hidden = true;
 
     try {
