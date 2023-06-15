@@ -7,6 +7,7 @@ import {
   Avatar,
   Button,
 } from "@material-ui/core";
+import decode from "jwt-decode";
 import moments from "../../images/moments.png";
 import useStyles from "./styles";
 import { useDispatch } from "react-redux";
@@ -31,7 +32,10 @@ function Navbar() {
   };
   useEffect(() => {
     const token = user?.token;
-
+    if (token) {
+      const decodedToken: any = decode(token);
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
