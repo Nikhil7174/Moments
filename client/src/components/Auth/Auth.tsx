@@ -63,7 +63,7 @@ function Auth() {
       dispatch(signin(formData, navigate));
     }
   };
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const switchMode = () => {

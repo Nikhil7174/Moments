@@ -54,11 +54,11 @@ function Form({ currentId, setCurrentId }): JSX.Element {
       );
       clear();
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
       clear();
     }
   };
-
+  console.log(user?.result?.name);
   if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>
