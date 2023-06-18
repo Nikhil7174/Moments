@@ -53,7 +53,7 @@ function Post({ post, setCurrentId }): JSX.Element {
 
   return (
     <>
-      <Card>
+      <Card className={classes.card} raised elevation={6}>
         {(user?.result?.googleId === post?.creatorId ||
           user?.result?._id === post?.creatorId) && (
           <div className={classes.overlay2}>

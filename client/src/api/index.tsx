@@ -11,7 +11,7 @@ API.interceptors.request.use((req: any): any => {
   return req;
 });
 
-export const fetchPosts = (): Promise<any> => API.get("/posts");
+export const fetchPosts = (page: any): any => API.get(`/posts?page=${page}`); //error in the url
 export const fetchPostsBySearch = (searchQuery: any): Promise<any> =>
   API.get(
     `/posts/search?searchQuery=${searchQuery.search || "none"}&tags=${

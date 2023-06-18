@@ -4,11 +4,31 @@ import mongoose from 'mongoose';
 
 //https://www.restapitutorial.com/httpstatuscodes.html
 export const getPosts = async (req: Request, res: Response): Promise<void> => {
+    const { page }: any = req.query
+
     try {
-        const postMessages = await PostMessage.find();
-        res.status(200).json(postMessages)
+        const LIMIT = 8
+        const startIndex = (Number(page) - 1) * LIMIT //get the starting index of every page
+        const total = await PostMessage.countDocuments({})
+        const post: any = (await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex));
+        res.status(200).json({ data: post, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
     } catch (error) {
-        res.status(404).json({ message: error.mesage })
+        res.status(404).json({ message: error.message })
+    }
+};
+
+//Query -> /posts?page=1  -> page=1
+//Params -> /posts/123    -> id=123
+
+export const getPostsBySearch = async (req: Request, res: Response): Promise<void> => {
+    const { searchQuery, tags }: any = req.query
+    try {
+        const title = new RegExp(searchQuery, 'i'); // Test test TEST -> test
+        const posts = await PostMessage.find({ $or: [{ title }, { tags: { $in: tags.split(',') } }] })
+
+        res.json({ data: posts })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
     }
 };
 

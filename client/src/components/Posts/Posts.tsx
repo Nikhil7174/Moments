@@ -9,10 +9,10 @@ import { Grid, CircularProgress } from "@material-ui/core";
 
 function Posts({ setCurrentId }): JSX.Element {
   // const dispatch = useDispatch();
-  const posts = useSelector((state: any) => state.posts);
+  const { posts } = useSelector((state: any) => state.posts);
   const classes = useStyles();
   // console.log(posts.length);
-  return !posts.length ? (
+  return !posts?.length ? (
     <CircularProgress />
   ) : (
     <Grid
@@ -22,7 +22,7 @@ function Posts({ setCurrentId }): JSX.Element {
       spacing={3}
     >
       {posts.map((post: any) => (
-        <Grid key={post._id} item xs={12} sm={6}>
+        <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
           <Post post={post} setCurrentId={setCurrentId} />
         </Grid>
       ))}

@@ -22,7 +22,7 @@ export default makeStyles({
     position: "relative",
   },
   overlay: {
-    marginTop: "-182px",
+    marginTop: "-8px",
     position: "absolute",
     // top: "20px",
     // left: "20px",
@@ -34,7 +34,7 @@ export default makeStyles({
     // top: "20px",
     // right: "20px",
     // background: "red",
-    marginLeft: "269px",
+    marginLeft: "190px",
   },
   grid: {
     display: "flex",

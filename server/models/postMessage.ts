@@ -4,7 +4,7 @@ interface Post {
     title: string;
     message: string;
     name: string;
-    creator: string;
+    creatorId: string;
     tags: string[];
     selectedFile: string;
     likes: string[];
@@ -15,7 +15,7 @@ const postSchema: Schema<Post> = new mongoose.Schema({
     title: String,
     message: String,
     name: String,
-    creator: String,
+    creatorId: String,
     tags: [String],
     selectedFile: String,
     likes: {

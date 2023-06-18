@@ -26,15 +26,15 @@ function Home() {
   const [currentId, setCurrentId] = useState<any>("");
   const query = useQuery();
   const navigate = useNavigate();
-  const page = query.get("page") || 1;
+  const page: any = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [currentId, dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [currentId, dispatch]);
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -107,7 +107,7 @@ function Home() {
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId} />
               <Paper className={classes.pagination} elevation={6}>
-                <Paginate />
+                <Paginate page={page} />
               </Paper>
             </Grid>
           </Grid>
