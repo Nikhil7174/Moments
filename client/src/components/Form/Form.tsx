@@ -50,15 +50,25 @@ function Form({ currentId, setCurrentId }): JSX.Element {
     e.preventDefault();
     if (currentId) {
       dispatch(
-        updatePost(currentId, { ...postData, name: user?.result?.name })
+        updatePost(currentId, {
+          ...postData,
+          name: user?.result?.name,
+          creatorId: user?.result?._id,
+        })
       );
       clear();
     } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(
+        createPost({
+          ...postData,
+          name: user?.result?.name,
+          creatorId: user?.result?._id,
+        })
+      );
       clear();
     }
   };
-  console.log(user?.result?.name);
+  // console.log(user?.result?.name);
   if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>

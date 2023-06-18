@@ -21,7 +21,8 @@ function Post({ post, setCurrentId }): JSX.Element {
   const dispatch = useDispatch();
 
   const user = JSON.parse(localStorage.getItem("profile"));
-
+  // console.log(user);
+  // console.log(post);
   const Likes = () => {
     if (post.likes.length > 0) {
       return post.likes.find(
@@ -53,8 +54,8 @@ function Post({ post, setCurrentId }): JSX.Element {
   return (
     <>
       <Card>
-        {(user?.result?.googleId === post?.creator ||
-          user?.result?._id === post?.creator) && (
+        {(user?.result?.googleId === post?.creatorId ||
+          user?.result?._id === post?.creatorId) && (
           <div className={classes.overlay2}>
             <Button
               style={{ color: "white" }}
@@ -105,8 +106,8 @@ function Post({ post, setCurrentId }): JSX.Element {
           >
             <Likes />
           </Button>
-          {(user?.result?.googleId === post?.creator ||
-            user?.result?._id === post?.creator) && (
+          {(user?.result?.googleId === post?.creatorId ||
+            user?.result?._id === post?.creatorId) && (
             <Button
               size="small"
               color="primary"
