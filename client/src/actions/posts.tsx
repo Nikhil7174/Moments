@@ -2,7 +2,10 @@ import * as api from "../api";
 import { Dispatch } from "redux";
 import {
   FETCH_ALL,
+  FETCH_POST,
   FETCH_BY_SEARCH,
+  START_LOADING,
+  END_LOADING,
   CREATE,
   UPDATE,
   DELETE,
@@ -10,10 +13,25 @@ import {
 } from "../constants/actionType";
 
 //Action Creators
+
+export const getPost = (id: any) => async (dispatch: Dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data } = await api.fetchPost(id);
+    dispatch({ type: FETCH_POST, payload: data });
+    dispatch({ type: END_LOADING });
+    console.log(data);
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 export const getPosts = (page: any) => async (dispatch: Dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data } = await api.fetchPosts(page);
     dispatch({ type: FETCH_ALL, payload: data });
+    dispatch({ type: END_LOADING });
     console.log(data);
   } catch (error: any) {
     console.log(error);
@@ -29,10 +47,12 @@ export const getPosts = (page: any) => async (dispatch: Dispatch) => {
 
 export const getPostsBySearch = (searchQuery: any) => async (dispatch: any) => {
   try {
+    dispatch({ type: START_LOADING });
     const {
       data: { data },
     } = await api.fetchPostsBySearch(searchQuery);
     dispatch({ type: FETCH_BY_SEARCH, payload: data });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
@@ -40,8 +60,10 @@ export const getPostsBySearch = (searchQuery: any) => async (dispatch: any) => {
 
 export const createPost = (post: any) => async (dispatch: any) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data } = await api.createPost(post);
     dispatch({ type: CREATE, payload: data });
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log("some error", error);
   }

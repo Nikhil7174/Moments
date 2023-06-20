@@ -49,8 +49,11 @@ export default makeStyles({
     fontSize: "24px",
   },
   cardActions: {
-    padding: "0 16px 8px 16px",
-    display: "flex",
-    justifyContent: "space-between",
+    // padding: "0 16px 8px 16px",
+    // display: "flex",
+    // justifyContent: "space-between",
+    "&:hover": {
+      backgroundColor: "rgba(0, 0, 0, 0.2)",
+    },
   },
 });

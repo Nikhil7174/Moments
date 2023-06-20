@@ -7,6 +7,7 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
+import { ButtonBase } from "@mui/material";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -15,10 +16,12 @@ import useStyles from "./styles";
 import moment from "moment";
 import { deletePost, likePost } from "../../../actions/posts";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Post({ post, setCurrentId }): JSX.Element {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("profile"));
   // console.log(user);
@@ -26,7 +29,7 @@ function Post({ post, setCurrentId }): JSX.Element {
   const Likes = () => {
     if (post.likes.length > 0) {
       return post.likes.find(
-        (like) => like === (user?.result?.googleId || user?.result?._id)
+        (like: any) => like === (user?.result?.googleId || user?.result?._id)
       ) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
@@ -51,50 +54,60 @@ function Post({ post, setCurrentId }): JSX.Element {
     );
   };
 
+  const openPost = () => {
+    navigate(`/posts/${post._id}`);
+  };
+
   return (
     <>
       <Card className={classes.card} raised elevation={6}>
-        {(user?.result?.googleId === post?.creatorId ||
-          user?.result?._id === post?.creatorId) && (
-          <div className={classes.overlay2}>
-            <Button
-              style={{ color: "white" }}
-              size="small"
-              onClick={() => {
-                setCurrentId(post._id);
-              }}
-            >
-              <MoreHorizIcon fontSize="medium" />
-            </Button>
+        <div
+          onClick={openPost}
+          style={{ cursor: "pointer" }}
+          className={classes.cardActions}
+        >
+          {(user?.result?.googleId === post?.creatorId ||
+            user?.result?._id === post?.creatorId) && (
+            <div className={classes.overlay2}>
+              <Button
+                style={{ color: "white" }}
+                size="small"
+                onClick={() => {
+                  setCurrentId(post._id);
+                }}
+              >
+                <MoreHorizIcon fontSize="medium" />
+              </Button>
+            </div>
+          )}
+
+          <CardMedia
+            className={classes.media}
+            image={post.selectedFile}
+            title={post.title}
+          />
+
+          <div className={classes.overlay}>
+            <Typography variant="h6">{post.name}</Typography>
+            <Typography variant="body2">
+              {moment(post.createdAt).fromNow()}
+            </Typography>
           </div>
-        )}
 
-        <CardMedia
-          className={classes.media}
-          image={post.selectedFile}
-          title={post.title}
-        />
-
-        <div className={classes.overlay}>
-          <Typography variant="h6">{post.name}</Typography>
-          <Typography variant="body2">
-            {moment(post.createdAt).fromNow()}
+          <div className={classes.details}>
+            <Typography variant="body2" color="textSecondary">
+              {post.tags.map((tag: string) => `#${tag} `)}
+            </Typography>
+          </div>
+          <Typography className={classes.title} gutterBottom>
+            {post.title}
           </Typography>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              {post.message}
+            </Typography>
+          </CardContent>
         </div>
-
-        <div className={classes.details}>
-          <Typography variant="body2" color="textSecondary">
-            {post.tags.map((tag: string) => `#${tag} `)}
-          </Typography>
-        </div>
-        <Typography className={classes.title} gutterBottom>
-          {post.title}
-        </Typography>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            {post.message}
-          </Typography>
-        </CardContent>
         <CardActions className={classes.cardActions}>
           <Button
             size="small"

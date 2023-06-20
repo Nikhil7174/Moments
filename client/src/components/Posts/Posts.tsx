@@ -9,10 +9,12 @@ import { Grid, CircularProgress } from "@material-ui/core";
 
 function Posts({ setCurrentId }): JSX.Element {
   // const dispatch = useDispatch();
-  const { posts } = useSelector((state: any) => state.posts);
+  const { posts, isLoading } = useSelector((state: any) => state.posts);
   const classes = useStyles();
   // console.log(posts.length);
-  return !posts?.length ? (
+
+  if (!posts.length && !isLoading) return "No Posts";
+  return isLoading ? (
     <CircularProgress />
   ) : (
     <Grid

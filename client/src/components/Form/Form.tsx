@@ -81,7 +81,7 @@ function Form({ currentId, setCurrentId }): JSX.Element {
 
   return (
     <>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={6}>
         <form
           autoComplete="off"
           noValidate

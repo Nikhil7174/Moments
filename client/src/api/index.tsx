@@ -11,6 +11,8 @@ API.interceptors.request.use((req: any): any => {
   return req;
 });
 
+export const fetchPost = (id) => API.get(`/posts/${id}`);
+
 export const fetchPosts = (page: any): any => API.get(`/posts?page=${page}`); //error in the url
 export const fetchPostsBySearch = (searchQuery: any): Promise<any> =>
   API.get(

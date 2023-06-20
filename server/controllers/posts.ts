@@ -17,6 +17,16 @@ export const getPosts = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+export const getPost = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const post = await (PostMessage.findById(id))
+        res.status(200).json(post)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
 //Query -> /posts?page=1  -> page=1
 //Params -> /posts/123    -> id=123
 
