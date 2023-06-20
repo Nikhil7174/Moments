@@ -58,16 +58,19 @@ export const getPostsBySearch = (searchQuery: any) => async (dispatch: any) => {
   }
 };
 
-export const createPost = (post: any) => async (dispatch: any) => {
-  try {
-    dispatch({ type: START_LOADING });
-    const { data } = await api.createPost(post);
-    dispatch({ type: CREATE, payload: data });
-    dispatch({ type: END_LOADING });
-  } catch (error) {
-    console.log("some error", error);
-  }
-};
+export const createPost =
+  (post: any, navigate: any) => async (dispatch: any) => {
+    try {
+      dispatch({ type: START_LOADING });
+      const { data } = await api.createPost(post);
+
+      dispatch({ type: CREATE, payload: data });
+      navigate(`/posts/${data._id}`);
+      dispatch({ type: END_LOADING });
+    } catch (error) {
+      console.log("some error", error);
+    }
+  };
 
 export const updatePost =
   (id: string, post: any) => async (dispatch: Dispatch) => {
