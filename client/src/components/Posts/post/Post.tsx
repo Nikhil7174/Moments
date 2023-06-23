@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardActions,
@@ -23,25 +23,41 @@ function Post({ post, setCurrentId }): JSX.Element {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [likes, setLikes] = useState(post?.likes);
+
   const user = JSON.parse(localStorage.getItem("profile"));
   // console.log(user);
   // console.log(post);
+  console.log(user);
+
+  console.log(post);
+
+  const userId = user?.result?.email || user?.result?._id;
+
+  const hasLikedPost = post.likes.find((like: any) => like === userId);
+
+  const handleLike = () => {
+    dispatch(likePost(post._id));
+    if (hasLikedPost) {
+      setLikes(post.likes.filter((id: any) => id !== userId));
+    } else {
+      setLikes([...post.likes]);
+    }
+  };
   const Likes = () => {
-    if (post.likes.length > 0) {
-      return post.likes.find(
-        (like: any) => like === (user?.result?.googleId || user?.result?._id)
-      ) ? (
+    if (likes?.length > 0) {
+      return likes.find((like: any) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
-          {post.likes.length > 2
-            ? `You and ${post.likes.length - 1} others`
-            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          {likes.length > 2
+            ? `You and ${likes.length - 1} others`
+            : `${likes.length} like${likes.length > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize="small" />
-          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;{likes.length} {likes.length === 1 ? "Like" : "Likes"}
         </>
       );
     }
@@ -66,19 +82,21 @@ function Post({ post, setCurrentId }): JSX.Element {
           style={{ cursor: "pointer" }}
           className={classes.cardActions}
         >
-          {(user?.result?.googleId === post?.creatorId ||
+          {(user?.result?.email === post?.creatorId ||
             user?.result?._id === post?.creatorId) && (
-            <div className={classes.overlay2}>
-              <Button
-                style={{ color: "white" }}
-                size="small"
-                onClick={() => {
-                  setCurrentId(post._id);
-                }}
-              >
-                <MoreHorizIcon fontSize="medium" />
-              </Button>
-            </div>
+            <>
+              <div className={classes.overlay2}>
+                <Button
+                  style={{ color: "white" }}
+                  size="small"
+                  onClick={() => {
+                    setCurrentId(post._id);
+                  }}
+                >
+                  <MoreHorizIcon fontSize="medium" />
+                </Button>
+              </div>
+            </>
           )}
 
           <CardMedia
@@ -113,13 +131,12 @@ function Post({ post, setCurrentId }): JSX.Element {
             size="small"
             color="primary"
             disabled={!user?.result}
-            onClick={() => {
-              dispatch(likePost(post._id));
-            }}
+            onClick={handleLike}
           >
             <Likes />
           </Button>
-          {(user?.result?.googleId === post?.creatorId ||
+
+          {(user?.result?.email === post?.creatorId ||
             user?.result?._id === post?.creatorId) && (
             <Button
               size="small"

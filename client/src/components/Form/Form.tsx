@@ -53,7 +53,6 @@ function Form({ currentId, setCurrentId }): JSX.Element {
         updatePost(currentId, {
           ...postData,
           name: user?.result?.name,
-          creatorId: user?.result?._id,
         })
       );
       clear();
@@ -63,7 +62,7 @@ function Form({ currentId, setCurrentId }): JSX.Element {
           {
             ...postData,
             name: user?.result?.name,
-            creatorId: user?.result?._id,
+            creatorId: user?.result?._id || user?.result?.email,
           },
           navigate
         )
