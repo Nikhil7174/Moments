@@ -11,7 +11,7 @@ API.interceptors.request.use((req: any): any => {
   return req;
 });
 
-export const fetchPost = (id) => API.get(`/posts/${id}`);
+export const fetchPost = (id: any) => API.get(`/posts/${id}`);
 
 export const fetchPosts = (page: any): any => API.get(`/posts?page=${page}`); //error in the url
 export const fetchPostsBySearch = (searchQuery: any): Promise<any> =>
@@ -25,6 +25,8 @@ export const updatePost = (id: string, updatePost: any) =>
   API.patch(`/posts/${id}`, updatePost);
 export const deletePost = (id: string) => API.delete(`/posts/${id}`);
 export const likePost = (id: string) => API.patch(`/posts/${id}/likePost`);
+export const comment = (value: string, id: string) =>
+  API.post(`/posts/${id}/commentPost`, { value });
 
 export const signIn = (formData: any) => API.post("/user/signin", formData);
 export const signUp = (formData: any) => API.post("/user/signup", formData);

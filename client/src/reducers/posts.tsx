@@ -8,6 +8,7 @@ import {
   FETCH_BY_SEARCH,
   START_LOADING,
   END_LOADING,
+  COMMENT,
 } from "../constants/actionType";
 const reducer = (state: any = { isLoading: true, posts: [] }, action: any) => {
   switch (action.type) {
@@ -36,6 +37,13 @@ const reducer = (state: any = { isLoading: true, posts: [] }, action: any) => {
         ),
       };
     case LIKE:
+      return {
+        ...state,
+        posts: state.posts.map((post: any) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    case COMMENT:
       return {
         ...state,
         posts: state.posts.map((post: any) =>

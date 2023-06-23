@@ -10,6 +10,7 @@ import {
   UPDATE,
   DELETE,
   LIKE,
+  COMMENT,
 } from "../constants/actionType";
 
 //Action Creators
@@ -99,3 +100,16 @@ export const likePost = (id: string) => async (dispatch: Dispatch) => {
     console.log(error);
   }
 };
+
+export const commentPost =
+  (value: string, id: string) => async (dispatch: Dispatch) => {
+    try {
+      const { data } = await api.comment(value, id);
+      // console.log(data);
+      dispatch({ type: COMMENT, payload: data });
+
+      return data.comments; //returning newest comments
+    } catch (error) {
+      console.log(error);
+    }
+  };

@@ -110,3 +110,20 @@ export const likePost = async (req: any, res: Response): Promise<any> => {
 
     res.json(updatedPost)
 }
+
+export const commentPost = async (req: Request, res: Response) => {
+    const { id } = req.params
+    const { value }: any = req.body
+
+
+    const post: any = await PostMessage.findById(id)
+    // console.log(value)
+    // console.log(post.comments.length)
+    // for (let i = 0; i < post.comments.length(); i++)
+    //     post.comments[i] = value;
+    post.comments.push(value)
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true })
+
+    res.json(updatedPost)
+}

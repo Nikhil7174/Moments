@@ -8,6 +8,7 @@ interface Post {
     tags: string[];
     selectedFile: string;
     likes: string[];
+    comments: string[];
     createdAt?: Date;
 }
 
@@ -19,6 +20,10 @@ const postSchema: Schema<Post> = new mongoose.Schema({
     tags: [String],
     selectedFile: String,
     likes: {
+        type: [String],
+        default: []
+    },
+    comments: {
         type: [String],
         default: []
     },
