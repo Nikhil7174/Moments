@@ -1,6 +1,16 @@
 {
   "version": 2,
-  "name": "moments-album",
-  "builds": [{ "src": "app.ts", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/app.ts" }]
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+
+      "dest": "index.ts"
+    }
+  ]
 }
