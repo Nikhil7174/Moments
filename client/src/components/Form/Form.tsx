@@ -62,7 +62,7 @@ function Form({ currentId, setCurrentId }): JSX.Element {
           {
             ...postData,
             name: user?.result?.name,
-            creatorId: user?.result?._id || user?.result?.email,
+            creatorId: user?.result?._id || user?.result?.sub,
           },
           navigate
         )

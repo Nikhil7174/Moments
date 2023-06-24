@@ -7,14 +7,21 @@ export default makeStyles((theme) => ({
     margin: "30px 0",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   heading: {
     color: "rgba(0,183,255, 1)",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 20,
+    },
   },
   image: {
     marginLeft: "15px",
+    [theme.breakpoints.down("xs")]: {
+      width: 40,
+      height: 35,
+    },
   },
   toolbar: {
     display: "flex",
@@ -34,6 +41,10 @@ export default makeStyles((theme) => ({
   brandContainer: {
     display: "flex",
     alignItems: "center",
+    paddingLeft: "20px",
+    [theme.breakpoints.down("xs")]: {
+      margin: "0 40px",
+    },
   },
 
   purple: {

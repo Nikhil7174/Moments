@@ -26,14 +26,13 @@ function Post({ post, setCurrentId }): JSX.Element {
   const [likes, setLikes] = useState(post?.likes);
 
   const user = JSON.parse(localStorage.getItem("profile"));
-  // console.log(user);
-  // console.log(post);
   console.log(user);
-
   console.log(post);
 
-  const userId = user?.result?.email || user?.result?._id;
+  const userId = user?.result?._id || user?.result?.sub;
 
+  console.log(likes);
+  console.log(userId);
   const hasLikedPost = post.likes.find((like: any) => like === userId);
 
   const handleLike = () => {
@@ -41,12 +40,12 @@ function Post({ post, setCurrentId }): JSX.Element {
     if (hasLikedPost) {
       setLikes(post.likes.filter((id: any) => id !== userId));
     } else {
-      setLikes([...post.likes]);
+      setLikes([...post.likes, userId]);
     }
   };
   const Likes = () => {
     if (likes?.length > 0) {
-      return likes.find((like: any) => like === userId) ? (
+      return post.likes.find((like: any) => like === userId) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
@@ -77,14 +76,10 @@ function Post({ post, setCurrentId }): JSX.Element {
   return (
     <>
       <Card className={classes.card} raised elevation={6}>
-        <div
-          onClick={openPost}
-          style={{ cursor: "pointer" }}
-          className={classes.cardActions}
-        >
-          {(user?.result?.email === post?.creatorId ||
-            user?.result?._id === post?.creatorId) && (
+        <div className={classes.cardActions}>
+          {userId === post.creatorId && (
             <>
+              {"             "}
               <div className={classes.overlay2}>
                 <Button
                   style={{ color: "white" }}
@@ -112,19 +107,25 @@ function Post({ post, setCurrentId }): JSX.Element {
             </Typography>
           </div>
 
-          <div className={classes.details}>
-            <Typography variant="body2" color="textSecondary">
-              {post.tags.map((tag: string) => `#${tag} `)}
+          <div
+            className={classes.cardContainer}
+            onClick={openPost}
+            style={{ cursor: "pointer" }}
+          >
+            <div className={classes.details}>
+              <Typography variant="body2" color="textSecondary">
+                {post.tags.map((tag: string) => `#${tag} `)}
+              </Typography>
+            </div>
+            <Typography className={classes.title} gutterBottom>
+              {post.title}
             </Typography>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                {post.message}
+              </Typography>
+            </CardContent>
           </div>
-          <Typography className={classes.title} gutterBottom>
-            {post.title}
-          </Typography>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              {post.message}
-            </Typography>
-          </CardContent>
         </div>
         <CardActions className={classes.cardActions}>
           <Button
@@ -136,8 +137,7 @@ function Post({ post, setCurrentId }): JSX.Element {
             <Likes />
           </Button>
 
-          {(user?.result?.email === post?.creatorId ||
-            user?.result?._id === post?.creatorId) && (
+          {userId === post.creatorId && (
             <Button
               size="small"
               color="primary"
