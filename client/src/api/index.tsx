@@ -1,3 +1,4 @@
+//@ts-nocheck
 import axios from "axios";
 
 const API = axios.create({ baseURL: "https://moments-api.onrender.com" });
