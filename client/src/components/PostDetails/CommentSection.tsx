@@ -26,10 +26,16 @@ function CommentSection({ post }: any) {
   return (
     <div>
       <div className={classes.commentsOuterContainer}>
-        <div className={classes.commentsInnerContainer}>
-          <Typography gutterBottom variant="h6">
-            Comments
-          </Typography>
+        <Typography gutterBottom variant="h6">
+          Comments
+        </Typography>
+        <div
+          className={
+            comments.length > 5
+              ? classes.commentsInnerContainer
+              : classes.commentsInnerContainer2
+          }
+        >
           {comments.map((c: string, i: string) => (
             <Typography key={i} gutterBottom variant="subtitle1">
               <strong>{c.split(": ")[0]}: </strong>

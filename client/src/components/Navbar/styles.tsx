@@ -13,14 +13,18 @@ export default makeStyles((theme) => ({
   heading: {
     color: "rgba(0,183,255, 1)",
     [theme.breakpoints.down("xs")]: {
-      fontSize: 20,
+      fontSize: 27,
     },
   },
   image: {
     marginLeft: "15px",
+    [theme.breakpoints.down("sm")]: {
+      width: 45,
+      height: 40,
+    },
     [theme.breakpoints.down("xs")]: {
-      width: 40,
-      height: 35,
+      width: 35,
+      height: 30,
     },
   },
   toolbar: {
@@ -32,23 +36,42 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     width: "400px",
+    [theme.breakpoints.down("sm")]: {
+      width: "285px",
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "119px",
+    },
   },
-  logout: {},
+  logout: {
+    [theme.breakpoints.down("xs")]: {
+      width: 76,
+      height: 35,
+    },
+  },
   userName: {
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
+
   brandContainer: {
     display: "flex",
     alignItems: "center",
     paddingLeft: "20px",
     [theme.breakpoints.down("xs")]: {
-      margin: "0 40px",
+      margin: "0 0px",
     },
   },
 
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+    [theme.breakpoints.down("xs")]: {
+      width: 35,
+      height: 35,
+    },
   },
 }));
