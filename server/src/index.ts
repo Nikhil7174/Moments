@@ -21,7 +21,6 @@ app.use('/user', userRoutes)
 const CONNECTION_URL: string = process.env.CONNECTION_URL
 
 const PORT: number | string = process.env.PORT || 5000
-console.log(CONNECTION_URL)
 mongoose.connect(CONNECTION_URL,)
     .then(() => app.listen(PORT, () => console.log(`Server running on port:${PORT}`)))
     .catch((error) => console.log("some error", error))
