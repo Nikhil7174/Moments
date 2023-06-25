@@ -5,11 +5,11 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
 
 function App() {
+  const user = JSON.parse(localStorage.getItem("profile"));
   return (
     <>
       <BrowserRouter>
