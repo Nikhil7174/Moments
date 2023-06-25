@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       flexWrap: "wrap",
-      flexDirection: "column",
+      flexDirection: "column-reverse",
     },
   },
   section: {
@@ -45,7 +45,7 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   commentsInnerContainer: {
-    height: "200px",
+    height: "auto",
     overflow: "auto",
     marginRight: "30px",
   },
