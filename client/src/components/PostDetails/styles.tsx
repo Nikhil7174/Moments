@@ -29,7 +29,8 @@ export default makeStyles((theme) => ({
   recommendedPosts: {
     display: "flex",
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
+      flexWrap: "nowrap",
+      overflowX: "scroll",
     },
   },
   loadingPaper: {
