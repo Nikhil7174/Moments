@@ -14,5 +14,3 @@ https://moments7174.netlify.app/posts
 - cd Backend
 - yarn run dev or yarn start 
 
-# Timeline
-December 14, 2023 - January 14, 2024
