@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from "react";
 import { useSelector } from "react-redux";
-import Post from "./Post/Post";
+import Post from "./post/Post";
 import useStyles from "./styles";
 import { Grid, CircularProgress } from "@material-ui/core";
 // import { Id } from "@reduxjs/toolkit/dist/tsHelpers";

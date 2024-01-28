@@ -50,6 +50,7 @@ function Navbar() {
           variant="h3"
           align="center"
         >
+        {/* <div className="text-green-400"></div> */}
           <Link href="/" underline="none">
             Moments
           </Link>
@@ -76,7 +77,7 @@ function Navbar() {
             </Typography>
             <Button
               variant="contained"
-              className={classes.logout}
+              
               color="secondary"
               onClick={logout}
             >
@@ -86,7 +87,7 @@ function Navbar() {
         ) : (
           <div>
             <Link href="/auth" underline="none">
-              <Button variant="contained" color="primary">
+              <Button variant="contained" className={classes.logout}>
                 Sign In
               </Button>
             </Link>

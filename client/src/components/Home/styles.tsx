@@ -17,6 +17,12 @@ export default makeStyles((theme) => ({
     marginBottom: "1rem",
     padding: "16px",
   },
+  searchButton: {
+    // background: "-webkit-linear-gradient(45deg, blue 30%, green 70%)",
+    // WebkitTextFillColor: "transparent",
+    // WebkitBackgroundClip: "text",
+    // backgroundColor: "rgba(0,183,255, 1)",
+  },
   gridContainer: {
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column-reverse",

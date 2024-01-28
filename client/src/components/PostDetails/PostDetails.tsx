@@ -1,10 +1,14 @@
 //@ts-nocheck
-import React, { useEffect } from "react";
+import * as toxicity from "@tensorflow-models/toxicity";
+import * as tf from '@tensorflow/tfjs';
+tf.setBackend('webgl'); // set backend to webgl for better performance
+import React, { useEffect, useState } from "react";
 import {
   Paper,
   Typography,
   CircularProgress,
   Divider,
+  Button,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -12,6 +16,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import { getPost, getPostsBySearch } from "../../actions/posts";
 import CommentSection from "./CommentSection";
+import { purple } from '@mui/material/colors';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+const color = purple[700];
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state: any) => state.posts);
@@ -20,12 +29,37 @@ const PostDetails = () => {
   const classes = useStyles();
   const { id } = useParams();
 
+  const [toxicityPredictions, setToxicityPredictions] = useState([]);
+  const [isToxicityLoading, setIsToxicityLoading] = useState(false);
+
+  const checkToxicity = async (text, threshold) => {
+    setIsToxicityLoading(true);
+  
+    try {
+      // Set the backend before loading the model
+      tf.setBackend('webgl'); // or 'cpu', 'wasm', etc.
+  
+      const model = await toxicity.load(threshold);
+      const predictions = await model.classify([text]);
+  
+      setToxicityPredictions(predictions);
+      console.log(predictions);
+    } catch (error) {
+      console.error("Error loading or classifying with toxicity model:", error);
+    } finally {
+      setIsToxicityLoading(false);
+    }
+  };
+  
+  
+
   useEffect(() => {
     dispatch(getPost(id));
   }, [id]);
 
   useEffect(() => {
     if (post) {
+      checkToxicity(post.title, 0.9);
       dispatch(
         getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
       );
@@ -83,6 +117,34 @@ const PostDetails = () => {
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
+
+          
+{isToxicityLoading && <CircularProgress size={"1em"} />}
+{toxicityPredictions.length > 0 && (
+  <div>
+    <Typography variant="h6">Labels:</Typography>
+    <ul>
+      <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", marginLeft:"-20px"}}>
+      {toxicityPredictions
+        .filter((prediction) => prediction.results[0].match)
+        .map((prediction, index) => (
+          <div key={index} className="p-4" >
+            <div style={{display:"flex", flexDirection:"row", flexWrap:"wrap", margin:"10px"}}>
+            <Chip label={prediction.label} color="error" />
+              {/* :
+              {prediction.results[0].probabilities[1].toFixed(4)} */}
+            </div>
+          </div>
+      
+        ))}
+      </div>
+      {toxicityPredictions.every((prediction) => !prediction.results[0].match) && (
+        <Chip label={"General"} color="success" />
+      )}
+    </ul>
+  </div>
+)}
+
 
           <CommentSection post={post} />
 

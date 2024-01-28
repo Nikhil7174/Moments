@@ -11,7 +11,11 @@ export default makeStyles((theme) => ({
     alignItems: "center",
   },
   heading: {
-    color: "rgba(0,183,255, 1)",
+    // fontSize: 20,
+    // background: "-webkit-linear-gradient(45deg, rgba(0,183,255, 1) 30%, rgba(0,183,255, 1) 70%)",
+    // WebkitBackgroundClip: "text",
+    // WebkitTextFillColor: "transparent",
+    color: "rgba(0,183,255, 1) !important",
     [theme.breakpoints.down("xs")]: {
       fontSize: 27,
     },
@@ -44,6 +48,10 @@ export default makeStyles((theme) => ({
     },
   },
   logout: {
+    background: "-webkit-linear-gradient(30deg, blue 30%, green 70%)",
+    WebkitBackgroundClip: "text",
+    color: "rgba(0,183,255, 1)",
+    WebkitTextFillColor: "transparent",
     [theme.breakpoints.down("xs")]: {
       width: 76,
       height: 35,

@@ -149,7 +149,7 @@ function Post({ post, setCurrentId }): JSX.Element {
               <DeleteIcon fontSize="small" />
               Delete
             </Button>
-          )}
+          )} 
         </CardActions>
       </Card>
     </>
