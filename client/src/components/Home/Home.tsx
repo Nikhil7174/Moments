@@ -62,6 +62,12 @@ function Home() {
   };
   return (
     <div>
+      <Helmet>
+        <meta
+          name="google-site-verification"
+          content="LTEslH9dKKs5wwLu8JhLPM4jiI1qE-M05wJUK2eKZnU"
+        />
+      </Helmet>
       <Grow in>
         <Container maxWidth="xl">
           <Grid
